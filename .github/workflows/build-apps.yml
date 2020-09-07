@@ -1,0 +1,46 @@
+name: Build native apps
+
+on:
+  push:
+    tags:
+      - build-*
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set Node Version
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10'
+    - name: Install Dependencies
+      run: npm ci && npm i -g cordova-res
+    - name: Use coturiv/setup-ionic
+      uses: coturiv/setup-ionic@v1
+      with:
+        cordova-version: 8
+    - name: Install Java SDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: '1.8'
+        java-package: jdk
+        architecture: x64
+    - name: Build
+      run: |
+          ionic cordova platform add android@latest
+          ionic cordova platform add ios@latest
+          ionic cordova build ios
+          ionic cordova build android
+    - name: Upload iOS app
+      uses: actions/upload-artifact@v1
+      with:
+        name: ordo-business-ios.app
+        path: "platforms/ios/build/emulator/Ordo Business.app"
+    - name: Upload Android app
+      uses: actions/upload-artifact@v1
+      with:
+        name: ordo-business-android.apk
+        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk

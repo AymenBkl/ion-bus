@@ -1,0 +1,59 @@
+name: Build and Deploy
+on:
+  push:
+    tags:
+      - release*
+
+jobs:
+  set-vars:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.environment.outputs.tag }}
+      commit: ${{ steps.environment.outputs.commit }}
+    steps:
+      - name: Set environment
+        id: environment
+        shell: bash
+        run: |
+          tag=${GITHUB_REF#refs/tags/}
+          echo "::set-output name=tag::${tag}"
+          commit=${GITHUB_SHA}
+          echo "::set-output name=commit::${commit}"
+          echo "Source is commit ${commit} with tag ${tag}"
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Set Node Version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npx ionic build --prod
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: www
+          path: www
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: www
+          path: www
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting -m \"Commit ${{steps.environment.outputs.commit}} - ${{steps.environment.outputs.tag}}\"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

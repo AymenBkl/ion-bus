@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text="" mode="md"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'Selected Categories' | translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="mainContent">
+    <h2 class="ion-text-center" *ngIf="!dummy?.length && !categories?.length">{{'No Category Found' | translate}}</h2>
+    <ion-item *ngFor="let item of dummy">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+
+    <div *ngFor="let item of categories;">
+      <ion-item lines="none" class="highlight">
+        <ion-label style="font-weight: bold;"> {{item.name}}</ion-label>
+        <ion-checkbox [(ngModel)]="item.isChecked" (ionChange)="categoryCheckChanged(item.id, item.isChecked)"></ion-checkbox>
+        
+      </ion-item>
+      <!--<div *ngIf="item.subcat">
+        <ion-item lines="none" *ngFor="let s of item?.subcat">
+          <ion-label>{{s?.name}}</ion-label>
+          <ion-icon slot="end" name="pencil-sharp" (click)="editSubCat(s,item.id)"></ion-icon>
+          <ion-icon slot="end" name="trash-outline" (click)="deleteSubcat(s.id,item.id)"></ion-icon>
+        </ion-item>
+      </div>-->
+    </div>
+  </div>
+</ion-content>

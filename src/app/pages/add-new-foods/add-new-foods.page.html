@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" text=""></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>{{isEdit ? 'Edit Food':'Add Food' }}</ion-title> -->
+
+    <ion-title *ngIf="isEdit">{{'Edit Food' | translate}}</ion-title>
+
+    <ion-title *ngIf="!isEdit">{{'Add Food' | translate}}</ion-title>
+
+    <!-- <ion-button *ngIf="isEdit == true" slot="end" class="delete_icn" icli fill="clear">
+      Delete
+    </ion-button> -->
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="mainContent">
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>{{'Category' | translate}}</ion-label>
+        <ion-select [(ngModel)]="cid" interface="popover"  [selectedText]="selectedcategory" mode="ios" (ionChange)="loadsubCats()">
+          <ion-select-option *ngFor="let item of categories" [value]="item.id" >{{item.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Sub Category' | translate}}</ion-label>
+        <ion-select [(ngModel)]="subcategory" interface="popover"  mode="ios">
+          <ng-container *ngIf="subcategories.length>0">
+          <ion-select-option *ngFor="let item of subcategories" [value]="item?.id">{{item?.name}}</ion-select-option>
+        </ng-container>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="name" type="text" [placeholder]="('Food Name' | translate )"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input [(ngModel)]="price" type="number" [placeholder]="('Price' | translate )"></ion-input>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label>{{'Variation' | translate}}</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="variation"></ion-toggle>
+      </ion-item> -->
+      <ion-item *ngIf="variation">
+        <ion-input [(ngModel)]="smallPrice" type="number" [placeholder]="('Small Price' | translate )"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="variation">
+        <ion-input [(ngModel)]="mediumPrice" type="number" [placeholder]="('Medium Price' | translate )"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="variation">
+        <ion-input [(ngModel)]="largePrice" type="number" [placeholder]="('Large Price' | translate )"></ion-input>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-label>{{'Veg' | translate}}</ion-label>
+        <ion-toggle slot="end" [(ngModel)]="veg"></ion-toggle>
+      </ion-item> -->
+      <ion-item>
+        <ion-textarea [(ngModel)]="descriptions" rows="5" [placeholder]="('Short descriptions' | translate )"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Status' | translate}}</ion-label>
+        <ion-select [(ngModel)]="status" interface="popover" mode="ios">
+          <ion-select-option value=true>{{'Available' | translate}}</ion-select-option>
+          <ion-select-option value=false>{{'Hide' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item (click)="selectPrinter()">
+          <ion-label>{{'Printer' | translate}}</ion-label>
+          <ion-label>{{selectedPrinter}}</ion-label>
+      </ion-item>
+      <div class="coverPlaceholder" (click)="cover()" *ngIf="!coverImage || coverImage ==''">
+        <ion-icon name="cloud-upload-outline" color="primary"></ion-icon>
+        <p>{{'Upload foods cover image here' | translate}}</p>
+      </div>
+      <div class="coverReal" (click)="cover()" [style.backgroundImage]="'url('+coverImage+')'"
+        *ngIf="coverImage && coverImage !=''">
+      </div>
+      <ion-button (click)="submit()" expand="block">
+        {{'Submit' | translate}}
+      </ion-button>
+    </ion-list>
+
+  </div>
+</ion-content>

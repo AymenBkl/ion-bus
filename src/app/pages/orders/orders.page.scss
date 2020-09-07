@@ -1,0 +1,139 @@
+.main_content_div{
+    width: 100%;
+
+    .segment_div{
+        display: flex;
+        margin-top: 20px;
+        border-bottom: 1px solid lightgray;
+        justify-content: space-around;
+        ion-label {
+            color: rgb(1, 1, 1);
+            padding-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .active{
+            border-bottom: 1px solid red;
+        }
+    }
+
+    .centent_div{
+        padding: 20px;
+
+        ion-label {
+            display: block;
+        }
+    }
+
+    .card_div{
+        width: 100%;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 0.5px solid lightgray;
+
+        .line_div{
+            height: 1px;
+            width: 100%;
+            background: lightgray;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .resto_detail{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            position: relative;
+        
+            .back_image{
+                height: 50px;
+                width: 50px;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                border-radius: 100%;
+            }
+
+            .res_name{
+              font-weight: 600;  
+              font-size: 14px;
+            } 
+            .res_location{
+                color: rgb(0, 0, 0);
+                font-size: 14px;
+            }
+
+            .order_id{
+                position: absolute;
+                right: 5px;
+                font-size: .6rem;
+                ion-label {
+                   text-align: right;
+                }
+            }
+        }
+
+        .order_detail{
+            .head_gray{
+                color: rgb(6, 2, 2);
+                font-size: 13px;
+                margin-top: 10px;
+            }
+            .small_lbl{
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .prize{
+                position: absolute;
+                right: 35px;
+                font-weight: 600 !important;
+            }
+        }
+    }
+}
+
+.blinkbg{
+    animation: blinkingBackground 1s infinite;
+}
+@keyframes blinkingBackground{
+    0%   { --background: #fff; }
+    49% { --background: #fff; }
+    50% { --background: rgb(181, 0, 0); }
+    99% { --background: rgb(181, 0, 0);  }
+    100% { --background: #fff; }
+}
+
+.notes{
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ddd;
+    padding-bottom: 5px;
+    color:red;
+}
+
+.ion-color-darkgreen {
+  position: relative;
+  top: 2px;
+  --ion-color-base: var(--ion-color-darkgreen);
+  --ion-color-base-rgb: var(--ion-color-darkgreen-rgb);
+  --ion-color-contrast: var(--ion-color-darkgreen-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-darkgreen-contrast-rgb);
+  --ion-color-shade: var(--ion-color-darkgreen-shade);
+  --ion-color-tint: var(--ion-color-darkgreen-tint);
+}
+
+.ion-color-mauve {
+  position: relative;
+  top: 2px;
+  --ion-color-base: var(--ion-color-mauve);
+  --ion-color-base-rgb: var(--ion-color-mauve-rgb);
+  --ion-color-contrast: var(--ion-color-mauve-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-mauve-contrast-rgb);
+  --ion-color-shade: var(--ion-color-mauve-shade);
+  --ion-color-tint: var(--ion-color-mauve-tint);
+}
+
+div.segment_div > *, div.card_div {
+  cursor: pointer;
+}
